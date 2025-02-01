@@ -6,6 +6,5 @@
     <title>Document</title>
 </head>
 <body>
-    Hello World There!
 </body>
 </html>
