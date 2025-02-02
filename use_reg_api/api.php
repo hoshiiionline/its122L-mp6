@@ -22,7 +22,7 @@ switch ($method) {
             while ($row = $result->fetch_assoc()) {
                 $users[] = $row;
             }
-            echo json_encode($users);
+            echo "<pre style='color: white;'>" . json_encode($users) . "</pre>";
         }
         break;
 
@@ -39,11 +39,11 @@ switch ($method) {
             if (checkdate($birthMonth, $birthDate, $birthYear)) {
                 $birthday = "$birthYear-$birthMonth-$birthDate";
             } else {
-                echo json_encode(["message" => "Invalid date"]);
+                echo "<pre style='color: white;'>" . json_encode(["message" => "Invalid date"]) . "</pre>";
             }
             
             $conn->query("INSERT INTO users (name, email, age, birthday, address) VALUES ('$name','$email', $age, '$birthday', '$address')");
-            echo json_encode(["message" => "User added successfully"]);
+            echo "<pre style='color: white;'>" . json_encode(["message" => "User added successfully"]) . "</pre>";
         } else {
             echo json_encode(["message" => "Required parameters are missing"]);
         }
@@ -60,9 +60,9 @@ switch ($method) {
             $address = mysqli_real_escape_string($conn, $input['address']);
             
             $conn->query("UPDATE users SET name='$name', email='$email', age=$age, birthday='$birthday', address='$address' WHERE id=$id");
-            echo json_encode(["message" => "User updated successfully"]);
+            echo "<pre style='color: white;'>" . json_encode(["message" => "User updated successfully"]) . "</pre>";
         } else {
-            echo json_encode(["message" => "Required parameters are missing"]);
+            echo "<pre style='color: white;'>" . json_encode(["message" => "Required parameters are missing"]) . "</pre>";
         }
         break;
 
@@ -70,14 +70,14 @@ switch ($method) {
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
             $conn->query("DELETE FROM users WHERE id=$id");
-            echo json_encode(["message" => "User deleted successfully"]);
+            echo "<pre style='color: white;'>" . json_encode(["message" => "User deleted successfully"]) . "</pre>";
         } else {
-            echo json_encode(["message" => "ID is required"]);
+            echo "<pre style='color: white;'>" . json_encode(["message" => "ID is required"]) . "</pre>";
         }
         break;
 
     default:
-        echo json_encode(["message" => "Invalid request method"]);
+        echo "<pre style='color: white;'>" . json_encode(["message" => "Invalid request method"]) . "</pre>";
         break;
 }
 
