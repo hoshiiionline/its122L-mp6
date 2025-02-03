@@ -18,6 +18,5 @@ die("Connection failed: " . $conn->connect_error);
     <title>Document</title>
 </head>
 <body>
-    Test
 </body>
 </html>
