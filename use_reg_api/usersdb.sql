@@ -3,5 +3,7 @@
     name VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
     age INT (3) NOT NULL,
-    birthday DATE NOT NULL,
+    birthMonth INT(3) NOT NULL,
+    birthDate INT(3) NOT NULL,
+    birthYear INT(3) NOT NULL,
     address VARCHAR(150) NOT NULL); 

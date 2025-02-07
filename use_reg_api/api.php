@@ -1,28 +1,37 @@
 <?php
 include 'db.php';
 
-// this condition is to check if api.php is being run directly. however, if run through other files such as register.php, this condition will be false
-// this is for POSTMAN usage, while not displaying on the actual site.
-if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {
-    header("Content-Type: application/json");
-}
+// Set header for JSON response
+header("Content-Type: application/json");
 
 $method = $_SERVER['REQUEST_METHOD'];
 
 switch ($method) {
     case 'GET':
         if (isset($_GET['id'])) {
-            $id = $_GET['id'];
+            $id = intval($_GET['id']); // Ensure ID is an integer
             $result = $conn->query("SELECT * FROM users WHERE id=$id");
-            $data = $result->fetch_assoc();
-            echo json_encode($data);
+
+            if ($result->num_rows > 0) {
+                $data = $result->fetch_assoc();
+                echo json_encode($data);
+            } else {
+                echo json_encode(["message" => "User not found"]);
+            }
         } else {
             $result = $conn->query("SELECT * FROM users");
             $users = [];
+
             while ($row = $result->fetch_assoc()) {
                 $users[] = $row;
             }
-            echo "<pre style='color: white;'>" . json_encode($users) . "</pre>";
+
+            // Ensure valid JSON response
+            if (!empty($users)) {
+                echo json_encode($users);
+            } else {
+                echo json_encode(["message" => "No registered users found"]);
+            }
         }
         break;
 
@@ -39,11 +48,12 @@ switch ($method) {
             if (checkdate($birthMonth, $birthDate, $birthYear)) {
                 $birthday = "$birthYear-$birthMonth-$birthDate";
             } else {
-                echo "<pre style='color: white;'>" . json_encode(["message" => "Invalid date"]) . "</pre>";
+                echo json_encode(["message" => "Invalid date"]);
+                exit;
             }
-            
-            $conn->query("INSERT INTO users (name, email, age, birthday, address) VALUES ('$name','$email', $age, '$birthday', '$address')");
-            echo "<pre style='color: white;'>" . json_encode(["message" => "User added successfully"]) . "</pre>";
+
+            $conn->query("INSERT INTO users (name, email, age, birthMonth, birthDate, birthYear, address) VALUES ('$name','$email', $age, '$birthMonth', '$birthDate', '$birthYear', '$address')");
+            echo json_encode(["message" => "User added successfully"]);
         } else {
             echo json_encode(["message" => "Required parameters are missing"]);
         }
@@ -51,33 +61,35 @@ switch ($method) {
 
     case 'PUT':
         $input = json_decode(file_get_contents('php://input'), true);
-        if (isset($input['id']) && isset($input['name']) && isset($input['email']) && isset($input['age']) && isset($input['birthday']) && isset($input['address'])) {
-            $id = $input['id'];
+        if (isset($input['id']) && isset($input['name']) && isset($input['email']) && isset($input['age']) && isset($input['birthMonth']) && isset($input['birthDate']) && isset($input['birthYear']) && isset($input['address'])) {
+            $id = intval($input['id']);
             $name = mysqli_real_escape_string($conn, $input['name']);
             $email = mysqli_real_escape_string($conn, $input['email']);
-            $age = mysqli_real_escape_string($conn, $input['age']);
-            $birthday = mysqli_real_escape_string($conn, $input['birthday']);
+            $age = intval($input['age']);
+            $birthMonth = intval($input['birthMonth']);
+            $birthDate = intval($input['birthDate']);
+            $birthYear = intval($input['birthYear']);
             $address = mysqli_real_escape_string($conn, $input['address']);
-            
-            $conn->query("UPDATE users SET name='$name', email='$email', age=$age, birthday='$birthday', address='$address' WHERE id=$id");
-            echo "<pre style='color: white;'>" . json_encode(["message" => "User updated successfully"]) . "</pre>";
+
+            $conn->query("UPDATE users SET name='$name', email='$email', age=$age, birthMonth='$birthMonth', birthDate='$birthDate', birthYear='$birthYear', address='$address' WHERE id=$id");
+            echo json_encode(["message" => "User updated successfully"]);
         } else {
-            echo "<pre style='color: white;'>" . json_encode(["message" => "Required parameters are missing"]) . "</pre>";
+            echo json_encode(["message" => "Required parameters are missing"]);
         }
         break;
 
     case 'DELETE':
         if (isset($_GET['id'])) {
-            $id = $_GET['id'];
+            $id = intval($_GET['id']);
             $conn->query("DELETE FROM users WHERE id=$id");
-            echo "<pre style='color: white;'>" . json_encode(["message" => "User deleted successfully"]) . "</pre>";
+            echo json_encode(["message" => "User deleted successfully"]);
         } else {
-            echo "<pre style='color: white;'>" . json_encode(["message" => "ID is required"]) . "</pre>";
+            echo json_encode(["message" => "ID is required"]);
         }
         break;
 
     default:
-        echo "<pre style='color: white;'>" . json_encode(["message" => "Invalid request method"]) . "</pre>";
+        echo json_encode(["message" => "Invalid request method"]);
         break;
 }
 
