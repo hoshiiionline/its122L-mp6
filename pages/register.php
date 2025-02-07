@@ -1,7 +1,7 @@
 <?php 
-ob_start();
+
 require '../use_reg_api/api.php';
-ob_end_clean();
+
 ?>
 
 <!DOCTYPE html>

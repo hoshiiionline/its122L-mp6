@@ -1,0 +1,96 @@
+body {
+    font-family: "Lexend Giga", sans-serif;
+    background-image: url(../Hero_Page.jpg);
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    color: #fff;
+}
+
+h2 {
+    color: #f3f3f3;
+    text-align: center;
+    font-size: 2rem;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+form {
+    width: 100%;
+    max-width: 550px;
+    max-height: 60%; 
+    backdrop-filter: blur(15px) saturate(120%);
+    background: rgba(255, 255, 255, 0.357);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto; 
+    align-items: center;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2e2e2e;
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #2e2e2e;
+    font-size: 1rem;
+    font-weight: 400;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+    background: rgba(255, 255, 255, 0.3);
+    transition: 0.3s ease;
+}
+
+input[type="submit"] {
+    background: rgba(218, 218, 218, 0.765);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-family: "Lexend Giga", sans-serif;
+}
+
+input[type="submit"]:hover {
+    background: rgba(16, 252, 138, 0.764);
+    font-family: "Lexend Giga", sans-serif;
+
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    padding: 12px 20px;
+    background: rgba(244, 8, 8, 0.863);
+    color: white;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+    font-family: "Lexend Giga", sans-serif;
+}
+
+a:hover {
+    background: rgba(230, 0, 0, 0.288);
+    color:rgba(225, 225, 225, 0.889)
+}

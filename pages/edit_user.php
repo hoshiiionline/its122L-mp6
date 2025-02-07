@@ -51,10 +51,13 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit User</title>
-    <link rel="stylesheet" href="../styling/edit-user-style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styling/edit-style.css"/>
 </head>
 <body>
-    <h2>Edit User</h2>
+    <h2>Editing User: <?php echo htmlspecialchars($user['name']);?></h2>
     <form action="edit_user.php?id=<?php echo $id; ?>" method="POST">
         <label for="name">Name:</label>
         <input type="text" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required><br>
@@ -81,6 +84,6 @@ $conn->close();
     </form>
 
     <br>
-    <a href="listuser.php">Back to User List</a>
+    <a href="userlist.php">Back to User List</a>
 </body>
 </html>
