@@ -32,9 +32,9 @@ switch ($method) {
 
             // Ensure valid JSON response
             if (!empty($users)) {
-                echo json_encode($users);
+                //echo json_encode($users);
             } else {
-                echo json_encode(["message" => "No registered users found"]);
+                //echo json_encode(["message" => "No registered users found"]);
             }
         }
         break;
