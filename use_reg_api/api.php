@@ -2,7 +2,11 @@
 include 'db.php';
 
 // Set header for JSON response
-header("Content-Type: application/json");
+// this condition is to check if api.php is being run directly. however, if run through other files such as register.php, this condition will be false
+// this is for POSTMAN usage, while not displaying on the actual site.
+if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {
+    header("Content-Type: application/json");
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 
