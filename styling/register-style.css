@@ -2,7 +2,7 @@ body{
     font-family: 'Roboto', sans-serif;
     background-image: url(../Hero_Page.jpg);
     margin: auto;
-    background-size:auto;
+    background-size:cover;
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
