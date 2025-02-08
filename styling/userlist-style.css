@@ -10,7 +10,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(15px);
 }
 
 h2 {
