@@ -82,15 +82,30 @@ switch ($method) {
         }
         break;
 
-    case 'DELETE':
-        if (isset($_GET['id'])) {
-            $id = intval($_GET['id']);
-            $conn->query("DELETE FROM users WHERE id=$id");
-            echo json_encode(["message" => "User deleted successfully"]);
-        } else {
-            echo json_encode(["message" => "ID is required"]);
-        }
-        break;
+        case 'DELETE':
+            parse_str(file_get_contents("php://input"), $_DELETE); 
+            if (isset($_DELETE['id'])) {
+                $id = intval($_DELETE['id']);
+        
+                $sql = "DELETE FROM users WHERE id=?";
+                $stmt = $conn->prepare($sql);
+        
+                if ($stmt) {
+                    $stmt->bind_param("i", $id);
+                    if ($stmt->execute()) {
+                        echo json_encode(["message" => "User deleted successfully"]);
+                    } else {
+                        echo json_encode(["message" => "Error deleting user: " . $stmt->error]);
+                    }
+                    $stmt->close();
+                } else {
+                    echo json_encode(["message" => "Failed to prepare statement"]);
+                }
+            } else {
+                echo json_encode(["message" => "ID is required"]);
+            }
+            break;
+        
 
     default:
         echo json_encode(["message" => "Invalid request method"]);

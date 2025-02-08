@@ -12,6 +12,7 @@ include '../use_reg_api/api.php';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styling/userlist-style.css"/>
+    <script src="../script/script.js"></script>
 </head>
 <body>
     <h2>REGISTERED USERS</h2>
@@ -36,8 +37,8 @@ include '../use_reg_api/api.php';
                     <td><?php echo htmlspecialchars($row["address"]); ?></td>
                     <td>
                         <a href="edit_user.php?id=<?php echo $row['id']; ?>" style="background: rgba(53, 255, 188, 0.41);">Edit</a> |
-                        <a href="delete_user.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');" style="background: rgba(255, 53, 53, 0.41);">Delete</a>
-                    </td>
+                        <a href="#" onclick="deleteUser(<?php echo $row['id']; ?>)" style="background: rgba(255, 53, 53, 0.41);">Delete</a>
+                        </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
