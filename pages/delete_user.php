@@ -19,6 +19,6 @@ include '../use_reg_api/api.php';
     echo "Invalid request.";
 }*/
 
-header(header: 'Refresh: 0; URL = pages/register.php');
+header(header: 'userlist.php');
 exit();
 ?>

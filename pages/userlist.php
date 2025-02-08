@@ -37,7 +37,7 @@ include '../use_reg_api/api.php';
                     <td><?php echo htmlspecialchars($row["address"]); ?></td>
                     <td>
                         <a href="edit_user.php?id=<?php echo $row['id']; ?>" style="background: rgba(53, 255, 188, 0.41);">Edit</a> |
-                        <a href="#" onclick="deleteUser(<?php echo $row['id']; ?>)" style="background: rgba(255, 53, 53, 0.41);">Delete</a>
+                        <a href="userlist.php" onclick="deleteUser(<?php echo $row['id']; ?>)" style="background: rgba(255, 53, 53, 0.41);">Delete</a>
                         </td>
                 </tr>
             <?php endforeach; ?>

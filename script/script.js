@@ -14,5 +14,4 @@ function deleteUser(userId) {
         })
         .catch(error => console.error("Error:", error));
     }
-    header(header: 'Refresh: 0; URL = pages/register.php');
 }
