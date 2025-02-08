@@ -1,7 +1,8 @@
 <?php
 include '../use_reg_api/db.php';
+include '../use_reg_api/api.php';
 
-if (isset($_GET['id'])) {
+/*if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     $sql = "DELETE FROM users WHERE id = ?";
     $stmt = $conn->prepare($sql);
@@ -16,10 +17,8 @@ if (isset($_GET['id'])) {
     $stmt->close();
 } else {
     echo "Invalid request.";
-}
+}*/
 
-$conn->close();
-
-header("Location: userlist.php");
+header(header: 'Refresh: 0; URL = pages/register.php');
 exit();
 ?>
