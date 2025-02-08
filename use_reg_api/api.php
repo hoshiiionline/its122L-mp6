@@ -63,24 +63,39 @@ switch ($method) {
         }
         break;
 
-    case 'PUT':
-        $input = json_decode(file_get_contents('php://input'), true);
-        if (isset($input['id']) && isset($input['name']) && isset($input['email']) && isset($input['age']) && isset($input['birthMonth']) && isset($input['birthDate']) && isset($input['birthYear']) && isset($input['address'])) {
-            $id = intval($input['id']);
-            $name = mysqli_real_escape_string($conn, $input['name']);
-            $email = mysqli_real_escape_string($conn, $input['email']);
-            $age = intval($input['age']);
-            $birthMonth = intval($input['birthMonth']);
-            $birthDate = intval($input['birthDate']);
-            $birthYear = intval($input['birthYear']);
-            $address = mysqli_real_escape_string($conn, $input['address']);
-
-            $conn->query("UPDATE users SET name='$name', email='$email', age=$age, birthMonth='$birthMonth', birthDate='$birthDate', birthYear='$birthYear', address='$address' WHERE id=$id");
-            echo json_encode(["message" => "User updated successfully"]);
-        } else {
-            echo json_encode(["message" => "Required parameters are missing"]);
-        }
-        break;
+        case 'PUT':
+            // Get the raw JSON input and decode it
+            $input = json_decode(file_get_contents('php://input'), true);
+        
+            if (isset($input['id']) && isset($input['name']) && isset($input['email']) && isset($input['age']) 
+                && isset($input['birthMonth']) && isset($input['birthDate']) && isset($input['birthYear']) 
+                && isset($input['address'])) {
+        
+                $id = intval($input['id']);
+                $name = mysqli_real_escape_string($conn, $input['name']);
+                $email = mysqli_real_escape_string($conn, $input['email']);
+                $age = intval($input['age']);
+                $birthMonth = intval($input['birthMonth']);
+                $birthDate = intval($input['birthDate']);
+                $birthYear = intval($input['birthYear']);
+                $address = mysqli_real_escape_string($conn, $input['address']);
+        
+                // Prepare an SQL statement to prevent SQL injection
+                $sql = "UPDATE users SET name=?, email=?, age=?, birthMonth=?, birthDate=?, birthYear=?, address=? WHERE id=?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ssiiissi", $name, $email, $age, $birthMonth, $birthDate, $birthYear, $address, $id);
+        
+                if ($stmt->execute()) {
+                    echo json_encode(["message" => "User updated successfully"]);
+                } else {
+                    echo json_encode(["message" => "Error updating user: " . $stmt->error]);
+                }
+        
+                $stmt->close();
+            } else {
+                echo json_encode(["message" => "Required parameters are missing"]);
+            }
+            break;        
 
         case 'DELETE':
             parse_str(file_get_contents("php://input"), $_DELETE); 
