@@ -17,10 +17,10 @@ switch ($method) {
             $result = $conn->query("SELECT * FROM users WHERE id=$id");
 
             if ($result->num_rows > 0) {
-                $data = $result->fetch_assoc();
-                echo json_encode($data);
+                $user = $result->fetch_assoc();
+                //echo json_encode($user);
             } else {
-                echo json_encode(["message" => "User not found"]);
+                //echo json_encode(["message" => "User not found"]);
             }
         } else {
             $result = $conn->query("SELECT * FROM users");

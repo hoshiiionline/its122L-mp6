@@ -1,9 +1,5 @@
 <?php
-include '../use_reg_api/db.php';
-
-// Fetch users from the database
-$sql = "SELECT id, name, email, age, birthMonth, birthDate, birthYear, address FROM users";
-$result = $conn->query($sql);
+include '../use_reg_api/api.php';
 ?>
 
 <!DOCTYPE html>
@@ -29,8 +25,8 @@ $result = $conn->query($sql);
             <th>Address</th>
             <th>Actions</th>
         </tr>
-        <?php if ($result->num_rows > 0): ?>
-            <?php while($row = $result->fetch_assoc()): ?>
+        <?php if (!empty($users)): ?>
+            <?php foreach ($users as $row): ?>
                 <tr>
                     <td><?php echo $row["id"]; ?></td>
                     <td><?php echo htmlspecialchars($row["name"]); ?></td>
@@ -43,7 +39,7 @@ $result = $conn->query($sql);
                         <a href="delete_user.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this user?');" style="background: rgba(255, 53, 53, 0.41);">Delete</a>
                     </td>
                 </tr>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         <?php else: ?>
             <tr>
                 <td colspan="7">No registered users found.</td>
@@ -55,7 +51,3 @@ $result = $conn->query($sql);
     <a href="register.php">Go Back to Registration</a>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>  
